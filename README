@@ -18,6 +18,12 @@ and has fallback for older browsers using a php stub
 If you checked out from repository you should run through the
 building cycle. See BUILDING for the details.
 
+For a running implementation use test.html. If your browser
+does not support HTML5 File API you should configure your
+environment to use freadstub.php.
+
+Configuration procedure:
+
 1. Place the content of the "out" folder in a reachable place
 2. Place "freadstub.php" in a reachable and phpable place
 2. Link the jquery, ajaxuploader and jsvcard (in this order) in

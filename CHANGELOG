@@ -1,5 +1,10 @@
 = jsvCard Changes
 
+== TODO
+
+* vCard 3.0 support
+* meaningful unit tests
+
 == Release 0.1
 
 First release.
