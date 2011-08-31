@@ -1,0 +1,21 @@
+= jsvCard - JavaScript vCard reader and parser
+
+== The building process
+
+The process is based on Rake, so to proceed you should have
+a Ruby installation and the Rake installed. See http://rake.rubyforge.org/
+
+You must also have a working java installation that meets the requirements
+of jslint and yuicompressor in the versions included in lib folder
+
+The process is divided in four phases:
+1. JSLint
+2. Generate docs
+3. Concatenate and compress the .js
+4. Modify the test files
+
+If you wish to generate the docs you should meet the requirements from
+YUI Doc (see lib/yiudoc/INSTALL).
+
+At the end of the building process you are invited to run the specs for the 
+builded code.

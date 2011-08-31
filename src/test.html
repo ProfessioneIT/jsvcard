@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test page</title>
+<script src="../lib/jquery-1.5.min.js"></script>
+
+<script src="../../jsiconv/iconv.js"></script>
+<script src="base64.js"></script>
+<script src="vcard.js"></script>
+<script src="jsvcard.js"></script>
+<link rel="stylesheet" href="jsvcard.css" />
+
+</head>
+<body>
+
+<img id="vClickMe" src="../lib/vcard.gif" alt="vCard Logo Little"/>
+
+<br /><br />
+
+<form id="vTargetForm">
+<table>
+	<tr>
+		<td>vCard Version:</td>	
+		<td><input id="vcver" class="vVersion" type="text" size="4" /></td>
+		<td>Home Address Post Office: </td>
+		<td><input class="input.vAddressHomePO" type="text"  size="16" /></td>
+	</tr>
+		<td>Title:</td>
+		<td><input id="title"  class="vTitle" type="text" size="16" /></td>
+		<td>Home Address Extended: </td>
+		<td><input class="vAddressHomeExt" type="text" size="16" /></td>
+	<tr>
+		<td>Name prefix:</td> 
+		<td><input class="vNamePrefix" type="text" size="16" />
+		<td>Home Address Street: </td>
+		<td><input class="vAddressHomeStreet" type="text" size="16" /></td>
+	</tr>
+	<tr>
+		<td>First name:</td> 
+		<td><input id="firstname"  class="vFirstName" type="text" size="16" />
+		<td>Home Address Locality: </td>
+		<td><input class="vAddressHomeLocality" type="text" size="16" /></td>
+	</tr>
+	<tr>
+		<td>Middle names:</td> 
+		<td><input id="midnames"  class="vMidNames" type="text" size="16" />
+		<td>Home Address Region: </td>
+		<td><input class="vAddressHomeRegion" type="text" size="16" /></td>
+	</tr>
+	<tr>
+		<td>Last name:</td> 
+		<td><input class="vLastName" type="text" size="16" />
+		<td>Home Address Postal Code: </td>
+		<td><input class="vAddressHomePostalCode" type="text" size="16" /></td>
+	</tr>
+	<tr>
+		<td>Name postfix:</td> 
+		<td><input class="vNamePostfix" type="text" size="16" />
+		<td>Home Address Country: </td>
+		<td><input class="vAddressHomeCountry" type="text" size="16" /></td>
+	</tr>
+	
+	<tr>
+		<td>Formatted name: </td>
+		<td><input class="vFName" type="text"  size="16" /></td>
+		<td>Home Address Label:</td>
+		<td><textarea rows="5" class="vAddressHomeLabel"></textarea></td>
+	</tr>
+	
+	<tr></tr>
+	
+	<tr>
+		<td>Birth date: </td> 
+		<td><input id="birthyear"  class="vBirthDate" type="text" size="3"/> / <input id="vBirthMonth" type="text" size="3"/> / <input id="vBirthYear" type="text" size="3"/></td> 
+		<td></td>
+		<td></td>
+	</tr>
+
+
+	<tr></tr>
+
+	<tr>
+		<td>Work Voice Telephone:<br /> </td> 
+		<td><input class="vTelWorkVoice" /><br />
+		<td>Home Voice Telephone:<br /> </td> 
+		<td><input class="vTelHomeVoice" /><br />
+	</tr>
+	<tr>
+		<td>Work Fax Telephone:<br /> </td> 
+		<td><input class="vTelWorkFax" /><br />
+		<td>Home Fax Telephone:<br /> </td> 
+		<td><input class="vTelHomeFax" /><br />
+	</tr>
+
+</table>
+</form>
+
+
+<script type="text/javascript">
+//<![CDATA[
+	jsvcard = new jsvCard();
+	jsvcard.install("vTargetForm","vClickMe","bottom-right");
+//]]>
+</script>
+
+</body>
+</html>

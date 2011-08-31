@@ -1,0 +1,9 @@
+= jsvCard Changes
+
+== Release 0.1
+
+First release.
+* vCard 2.1 supported
+* Popup with file selector, url or drop area
+* Browser detection for HTML5 support
+* Form filling with the vCard content

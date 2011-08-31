@@ -1,0 +1,44 @@
+div.jsvcardouter {
+	background-color:#444;
+	background-color:rgba(66,66,66,5);
+	opacity: 15%;
+	position: absolute;
+	width: 336px;
+	height: 216px;
+	
+	border-radius: 9px;
+	-moz-border-radius: 9px;
+	-webkit-border-radius: 9px;
+}
+div.jsvcardouter.dropok {
+	width: 336px;
+	height: 336px;
+}
+
+div.jsvcard {
+	position: relative;
+	overflow:hidden;
+	background-color: white;
+	padding: 8px;
+	top: 20px;
+	left: 20px;
+	width: 280px;
+	height: 160px;
+	
+	border-radius: 9px;
+	-moz-border-radius: 9px;
+	-webkit-border-radius: 9px;
+}
+
+div.jsvcard.dropok{
+	width: 280px;
+	height: 280px;	
+}
+
+div.jsvcarddrop {
+	border: 2px dashed gray;
+	width: 100%;
+	height: 60px;
+	text-align: center;
+}
+
