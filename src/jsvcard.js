@@ -215,10 +215,10 @@ var jsvCard = function(){
         // Create a hidden iframe that will receive the content of the submission
         var random = new Date().getTime();
         
-        var src = window.ActiveXObject ? ' src="' + 'javascript:false' + '"' : "";
+        //var src = window.ActiveXObject ? (' src="' + 'javascript:false' + '"') : "";
         
         var ifr_id = 'jsvcardiframe'+ random;
-        var ifr = $('<iframe id="'+ifr_id+'" name="'+ifr_id+'"'+src+'></iframe>').hide().appendTo('body');
+        var ifr = $('<iframe id="'+ifr_id+'" name="'+ifr_id+'"></iframe>').hide().appendTo('body');
         
         var iform_id = 'jsvcardform'+ random;
         var iform = $('<form id="' + iform_id + '" name="' + iform_id + '" action="" method="post" target="" enctype="multipart/form-data"></form>').hide().appendTo('body');
@@ -361,7 +361,6 @@ var jsvCard = function(){
         };
         
         this.resetForm = function(formid){
-                alert("TODO: RESET");
                 $('form#'+formid+' input').val('');
                 $('form#'+formid+' textarea').html('');
         };
