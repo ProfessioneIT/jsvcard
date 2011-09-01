@@ -16,7 +16,6 @@ if(empty($SID)) session_start() or exit(basename(__FILE__).': Could not start se
 
 if( isset($_REQUEST) && isset($_REQUEST['element']) )
 	$elem = $_REQUEST['element'];
-
 	
 // Implicit put
 if( empty($_REQUEST['action']) || $_REQUEST['action'] == 'put')

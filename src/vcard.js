@@ -12,6 +12,16 @@
 var vCard = function(){
 	var self = this;
 	
+	if (!Array.indexOf) {
+		Array.prototype.indexOf = function (obj, start) {
+			for (var i = (start || 0); i < this.length; i++) {
+				if (this[i] == obj) {
+					return i;
+				}
+			}
+		    return -1;
+		};
+	}
 	/**
 	 * Parses a single content line as described in RFC2425
 	 * Note: the value is not parsed.
@@ -239,9 +249,9 @@ var vCard = function(){
 		}
 		
 		// Convert all chars to numbers
-		binary_value = binary_value.map(function(v){ 
-			return v.charCodeAt(0);
-		});
+		for(var i=0; i < binary_value.length; i++){
+			binary_value[i] = binary_value[i].charCodeAt(0)
+		}
 	
 		return Iconv.decode(binary_value,charset);
 	};
@@ -303,16 +313,17 @@ var vCard = function(){
 		var set1 = ["voice","fax","modem","isdn","msg","pref","video"];
 		var set2 = ["home","work","cell","pager","bbs"];
 		
-		var set = set1.some(function(elem){return this == elem;}, x.parsing.toLowerCase());
+		var set = set1.indexOf(x.parsing.toLowerCase()) >= 0;
 		var parsing_set = set ? set1 : set2;
 		var params_set = set ? set2 : set1;
 		
-		x.params.forEach(function(par){
+		for(var i=0; i < x.params.length; i++){
+			var par = x.params[i];
 			var name = par.name.toLowerCase();
 			if(params_set.indexOf(name) >= 0){
 				ret[name] = value;
 			}
-		});
+		}
 		return ret;
 	};
 
@@ -449,7 +460,8 @@ var vCard = function(){
 		var ret = {};
 		if(version == "2.1"){
 	
-			data.forEach(function(row){
+			for(var i=0; i < data.length; i++){
+				var row = data[i];
 				var tagName = row.name.toLowerCase();
 				
 				if(vcard21Struct[tagName] === undefined){
@@ -480,19 +492,17 @@ var vCard = function(){
 								}
 							}
 						}
-						else{
-							throw "Wrong or not supported parameter name '" + paramName + "' for tag '" + tagName + "'";
-						}
+						//else ignore the parameter (could be a ENCODING or a CHARSET param...)
 					}
 				}
 				else if(typeof vcard21Struct[tagName] == "function"){
-					// We are parsing a simple valued tag					
+					// We are parsing a simple valued tag
 					ret[tagName] = vcard21Struct[tagName]({value:row.value, params:row.params, parsing:tagName});
 				}
 				else {
 					throw "Malformed vcard21Struct";
 				}
-			});
+			}
 		} else if(version == "3.0"){
 			throw "Unsupported vcard version";
 		}

@@ -29,16 +29,15 @@ var jsvCard = function(){
          */
         this.freadstub = "freadstub.php";
         
-        this.chooseText = "Please choose the vCard file or insert the URL into the appropriate box.";
+        this.chooseText = "Please choose the vCard file into the appropriate box.";
         this.dropText = "Alternatively you can drop your vCard file in the drop area below.";
         this.dropHereText = "Drop Here!";
-        this.wrongInputText = "Please specify a vCard file in your filesystem or a valid URL.";
+        this.wrongInputText = "Please specify a vCard file in your filesystem.";
         this.wrongDropText = "Please drop only a valid file in the drop area.";
         this.errorReadingText = "An error occoured while reading your vCard file.";
-        this.loadText = "Load";
-        this.resetText = "Reset";
+        this.resetText = "Form Reset";
         
-        this.forceHTML4 = false;
+        this.forceHTML4 = true;
         
         /**
         * This function installs jsvcard on the specified form
@@ -55,7 +54,6 @@ var jsvCard = function(){
                 var current_file = 'jsvcardfile' + installed;
                 var current_url = 'jsvcardurl' + installed;
                 var current_drop = 'jsvcarddrop' + installed;
-                var current_load = 'jsvcardload' + installed;
                 var current_reset = 'jsvcardreset' + installed;
                 
                 $('<div id="'+current_div_canvas+'" class="jsvcardouter"><div id="'+current_div+'" class="jsvcard"><p>'+this.chooseText+'</p></div></div>').hide().appendTo('body');
@@ -78,15 +76,8 @@ var jsvCard = function(){
                 $(document).ready(calcpos_lambda);
                 $(window).resize(calcpos_lambda);
 
-                $('<input type="file" id="'+current_file+'" name="'+current_file+'" single="single" size="15"/><br>URL: <input type="text" id="'+current_url+'" size="25"/><br><input id="'+current_load+'" type="button" value="'+this.loadText+'"/><input id="'+current_reset+'" type="button" value="'+this.resetText+'"/>').appendTo("#"+current_div);
+                $('<input type="file" id="'+current_file+'" name="'+current_file+'" single="single" size="15"/><br><br><input id="'+current_reset+'" type="button" value="'+this.resetText+'"/>').appendTo("#"+current_div);
                 
-                // Install event handlers
-                $('#'+current_reset).click({
-                        number:installed, 
-                        form:form_id,
-                        div_to_hide:current_div_canvas },
-                        this.handleReset);
-
                 var params = {
                         html5:false,
                         form:form_id,
@@ -95,12 +86,15 @@ var jsvCard = function(){
                         div_to_hide: current_div_canvas
                 };
                 
+                // Install event handlers
+                $('#'+current_reset).click(params,this.handleReset);
+
                 // Check for the various File API support.
                 if (window.File && window.FileReader && window.FileList && window.Blob && !this.forceHTML4) {
                         
                         // Using HTML5 File API	
                         params.html5 = true;
-                        $('#'+current_load).click(params, this.handleLoad);
+                        $('#'+current_file).change(params, this.handleLoad);
                         
                         // Determine if the drop event is supported
                         var dnd = "";
@@ -118,14 +112,14 @@ var jsvCard = function(){
                         }
                         testdiv = null;
                 } else {
-                        // Using freadstub
-                        $('#'+current_load).click(params,this.handleLoad);
+                    //Using freadstub
+                    $('#'+current_file).change(params, this.handleLoad);
                 }
                 
         };
         
         /**
-         * This function is used to calulate the position of the popup
+         * This function is used to calculate the position of the popup
          * @method calculatePosition
          */
         this.calculatePosition = function(clpos,clsize,mysize,mode){
@@ -150,27 +144,16 @@ var jsvCard = function(){
         };
         
         /**
-        * Handles the "Load" button click
+        * Handles the normal file loading
         * @method handleLoad
         */
         this.handleLoad = function(evt){
                 var files = document.getElementById(evt.data.file).files;
-                var url = $('#' + evt.data.url).val();
                 
-                if(files[0] !== undefined){
-                        // Default load the file in filesystem
-                        if(evt.data.html5){
-                                self.loadFromFile(files[0],evt.data.form);
-                        }else {
-                                self.loadFromFileNoHTML5(evt.data.file,evt.data.form);
-                        }
-                        
-                }else if(url !== undefined && url !== ""){
-                        // Lookup the URL
-                        self.loadFromURL(url,evt.data.form);
+                if(evt.data.html5 && files !== undefined && files[0] !== undefined){
+                    self.loadFromFile(files[0],evt.data.form);
                 } else {
-                        alert(self.wrongInputText);
-                        return false;
+                    self.loadFromFileNoHTML5(evt.data.file,evt.data.form);
                 }
                 $('#'+evt.data.div_to_hide).hide();
                 return true;
@@ -232,12 +215,13 @@ var jsvCard = function(){
         // Create a hidden iframe that will receive the content of the submission
         var random = new Date().getTime();
         
+        var src = window.ActiveXObject ? ' src="' + 'javascript:false' + '"' : "";
+        
         var ifr_id = 'jsvcardiframe'+ random;
-        var ifr = $('<iframe id="'+ifr_id+'"></iframe>').hide().appendTo('body');
+        var ifr = $('<iframe id="'+ifr_id+'" name="'+ifr_id+'"'+src+'></iframe>').hide().appendTo('body');
         
         var iform_id = 'jsvcardform'+ random;
-        var iform = $('<form id="' + iform_id + '" enctype="multipart/form-data"></form>');
-                $(iform).hide().appendTo('body');
+        var iform = $('<form id="' + iform_id + '" name="' + iform_id + '" action="" method="post" target="" enctype="multipart/form-data"></form>').hide().appendTo('body');
         
         // Clone the file upload element and put the original one in the hidden form
         // The cloned one will replace the original
@@ -252,16 +236,16 @@ var jsvCard = function(){
         
         // Callback used to load the 
         var loadCallbackLambda = function(isTimeout){
-                requestDone = true;
-                if(timer){
-                        clearTimeout(timer);
-                }
+            requestDone = true;
+            if(timer){
+                    clearTimeout(timer);
+            }
             try{
-                        setTimeout( function(){
-                                $(ifr).remove();
-                                $(iform).remove();
-                        }, 100);
-                } 
+                setTimeout( function(){
+                        $(ifr).remove();
+                        $(iform).remove();
+                }, 100);
+            } 
             catch(e){}
             
             if(isTimeout != "timeout"){
@@ -276,9 +260,9 @@ var jsvCard = function(){
         
         $(ifr).load(loadCallbackLambda);
         
-                $(iform).attr('action', self.freadstub);
-                $(iform).attr('method', 'POST');
-                $(iform).attr('target', ifr_id);
+        $(iform).attr('action', self.freadstub);
+        $(iform).attr('method', 'post');
+        $(iform).attr('target', ifr_id);
         if(iform.encoding){
             iform.encoding = 'multipart/form-data';
         }
@@ -287,7 +271,7 @@ var jsvCard = function(){
         }
         
         try{
-                $(iform).submit();
+            $(iform).submit();
             timer = setTimeout(function(){
                 // Check to see if the request is still happening
                 if( !requestDone ) {
@@ -318,14 +302,6 @@ var jsvCard = function(){
         });
     };
     
-    /*
-    * Loads the vCard from a URL
-    * url - a String conitainig the URL
-    * form - a String with the ID of the form to fill with data
-    */
-    this.loadFromURL = function(url,form){
-                alert("TODO: URL implementation");
-    };
 
     this.parseAndFill = function(data,formid){
         var vcard = new vCard(); 

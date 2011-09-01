@@ -22,8 +22,13 @@ task :default => [:build_and_clean]
 desc "Builds the project and then clean temporary products."
 task :build_and_clean => [:build,:clean]
 
+desc "Builds the project without building the API docs and then clean temporary products."
+task :build_no_docs => [:build_nd,:clean]
+
 desc "Builds the project."
 task :build => [:jslint,:yuidoc,:minify,:manip_tests]
+
+task :build_nd => [:jslint,:minify,:manip_tests]
 
 desc "Runs jslint over the source files."
 task :jslint => SRC do
@@ -49,6 +54,8 @@ task :manip_tests => ["#{BUILDDIR}/test","#{BUILDDIR}/lib"] do
   # Copy the needed files
   cp "src/jsvcard.css", "#{BUILDDIR}/lib/"
   cp "lib/jquery-1.5.min.js","#{BUILDDIR}/lib/"
+  cp "lib/vcard.gif","#{BUILDDIR}/lib/"
+  cp "src/freadstub.php", "#{BUILDDIR}/test/"
   
   # Modify the test & Spec pages
   manip_test_assets("src/test.html","#{BUILDDIR}/test/test.html")
