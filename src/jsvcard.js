@@ -37,7 +37,7 @@ var jsvCard = function(){
         this.errorReadingText = "An error occoured while reading your vCard file.";
         this.resetText = "Form Reset";
         
-        this.forceHTML4 = true;
+        this.forceHTML4 = false;
         
         /**
         * This function installs jsvcard on the specified form
