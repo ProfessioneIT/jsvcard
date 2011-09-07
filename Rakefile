@@ -1,3 +1,8 @@
+# @package jsvCard
+# @author Marco Cosentino
+# @copyright (C) 2011 www.professioneit.com
+# @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+
 require 'rake/clean'
 
 PVERSION = '0.1'

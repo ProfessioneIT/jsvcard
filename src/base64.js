@@ -6,7 +6,7 @@
 
 /**
 * Slightly modified respect to the original.
-* Defined the lib as an object
+* Defined the lib as a singleton
 */
 
 var Base64 = {

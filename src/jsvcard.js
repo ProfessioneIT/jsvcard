@@ -309,82 +309,107 @@ var jsvCard = function(){
         self.fillForm('vTargetForm',vcdata);
     };
     
-    /*
+    
+	/**
+	 * This hash contains classes associations. The key is the classname
+	 * the value is the path within the vcard object structure.<br/>
+	 * This hash will be used to fill the target form. If you want to support
+	 * other classes you have to add items to this hash [TODO: write how to]
+	 * @property CLASSES
+	 * @type Object
+	 */
+	this.CLASSES = {
+    		vVersion:"version",
+    		vTitle:"title",
+    		vFirstName:"n.first",
+    		vMidNames:"n.middle",
+    		vLastName:"n.last",
+    		vNamePrefix:"n.prefix",
+    		vNamePostfix:"n.postfix",
+    		vFName:"fn",
+    		vAddressHomePO:"adr.home.po",
+    		vAddressHomeExt:"adr.home.extension",
+    		vAddressHomeStreet:"adr.home.street",
+    		vAddressHomeLocation:"adr.home.location",
+    		vAddressHomeRegion:"adr.home.region",
+    		vAddressHomePostalCode:"adr.home.postalcode",
+    		vAddressHomeCountry:"adr.home.country",
+    		vAddressHomeLabel:"label.home",
+    		vTelHomeVoice:"tel.home.voice",
+    		vTelHomeFax:"tel.home.fax",
+    		vTelWorkVoice:"tel.work.voice",
+    		vTelWorkFax:"tel.work.fax"    		
+    };
+
+    /**
     * Fills the specified form with vCard parsed data.
     * If you don't like the class names we use you can override this
     * function with your own.
+    * @method fillForm
     * formid - a String with the ID of the form to fill with data
     * vcard - an Object that holds the data
     */
-        this.fillForm = function(formid,vcard)
-        {
-                $('form#'+formid+' .vVersion').val( vcard.version );
-                $('form#'+formid+' .vTitle').val( vcard.title );
-                
-                $('form#'+formid+' .vFirstName').val( vcard.n.first );
-                $('form#'+formid+' .vMidNames').val( vcard.n.middle );
-                $('form#'+formid+' .vLastName').val( vcard.n.last );
-                $('form#'+formid+' .vNamePrefix').val( vcard.n.prefix );
-                $('form#'+formid+' .vNamePostfix').val( vcard.n.postfix );
-                
-                $('form#'+formid+' .vFName').val( vcard.fn );
-                $('form#'+formid+' .vBirthDate').val( vcard.bday );
-                
-                if(vcard.adr !== undefined){
-                        if(vcard.adr.home !== undefined){
-                                $('form#'+formid+' .vAddressHomePO').val( vcard.adr.home.po );
-                                $('form#'+formid+' .vAddressHomeExt').val( vcard.adr.home.extension );
-                                $('form#'+formid+' .vAddressHomeStreet').val( vcard.adr.home.street );
-                                $('form#'+formid+' .vAddressHomeLocality').val( vcard.adr.home.location );
-                                $('form#'+formid+' .vAddressHomeRegion').val( vcard.adr.home.region );
-                                $('form#'+formid+' .vAddressHomePostalCode').val( vcard.adr.home.postalcode );
-                                $('form#'+formid+' .vAddressHomeCountry').val( vcard.adr.home.country );
-                        }
-                }
-                
-                if(vcard.label !== undefined) {
-                        $('form#'+formid+' .vAddressHomeLabel').val( vcard.label.home );
-                        $('form#'+formid+' .vAddressHomeLabel').html( vcard.label.home );
-                }
-                
-                if(vcard.tel !== undefined) {
-                        if(vcard.tel.home !== undefined) {
-                                $('form#'+formid+' .vTelHomeVoice').val( vcard.tel.home.voice );
-                                $('form#'+formid+' .vTelHomeFax').val( vcard.tel.home.fax );
-                        }
-                
-                        if(vcard.tel.work !== undefined) {
-                                $('form#'+formid+' .vTelWorkVoice').val( vcard.tel.work.voice );
-                                $('form#'+formid+' .vTelWorkFax').val( vcard.tel.work.fax );
-                        }
-                }
-        };
+	this.fillForm = function(formid,vcard)
+    {
+		// Cycle through classes
+		for (var klass in self.CLASSES){
+			if (self.CLASSES.hasOwnProperty(klass)) {
+			
+				var splitted = self.CLASSES[klass].split(".");
+				var i = 0;
+				var current_obj = vcard;
+				
+				// Check if the specified path is defined inside the vcard object
+				while(i < splitted.length && current_obj !== undefined && current_obj.hasOwnProperty(splitted[i])){
+					current_obj = current_obj[splitted[i]];
+					i++;
+				}
+				
+				// If the whole path inside the vcard object is defined then we
+				// will have the final value inside current_obj
+				if(i == splitted.length){
+					var element = $('form#'+formid+' .'+klass);
+					if(element[0] !== undefined){
+						switch(element[0].nodeName.toLowerCase())
+						{
+						case 'input':
+							$(element).val(current_obj);
+							break;
+						case 'textarea':
+							$(element).html(current_obj);
+							break;
+						}
+					}
+				}
+			}
+		}
+    };
         
-        this.resetForm = function(formid){
-                $('form#'+formid+' input').val('');
-                $('form#'+formid+' textarea').html('');
-        };
-                        
-		/**
-		* Determines if a given element supports the given event
-		* function from http://yura.thinkweb2.com/isEventSupported/
-		* @method isEventSupported
-		*/
-        this.isEventSupported = function ( eventName, element ) {
+    this.resetForm = function(formid){
+            $('form#'+formid+' input').val('');
+            $('form#'+formid+' textarea').html('');
+    };
+                    
+	/**
+	* Determines if a given element supports the given event
+	* function from http://yura.thinkweb2.com/isEventSupported/
+	* @method isEventSupported
+	*/
+    this.isEventSupported = function ( eventName, element ) {
 
-            var TAGNAMES = {
-                        'select': 'input', 'change': 'input',
-                        'submit': 'form', 'reset': 'form',
-                        'error': 'img', 'load': 'img', 'abort': 'img'
-                    };
+        var TAGNAMES = {
+                    'select': 'input', 'change': 'input',
+                    'submit': 'form', 'reset': 'form',
+                    'error': 'img', 'load': 'img', 'abort': 'img'
+                };
 
-        element = element || document.createElement(TAGNAMES[eventName] || 'div');
-        eventName = 'on' + eventName;
-
-        // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
-        var isSupported = eventName in element;
-
-        if ( !isSupported ) {
+	    element = element || document.createElement(TAGNAMES[eventName] || 'div');
+	    eventName = 'on' + eventName;
+	
+	    // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
+	    var isSupported = eventName in element;
+	
+	    if ( !isSupported ) {
 	        // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
 	        if ( !element.setAttribute ) {
 	            element = document.createElement('div');
@@ -397,10 +422,10 @@ var jsvCard = function(){
 	            if ( !is(element[eventName], 'undefined') ) { element[eventName] = undefined; }
 	            element.removeAttribute(eventName);
 	        }
-        }
-
-        element = null;
-        return isSupported;
+	    }
+	
+	    element = null;
+	    return isSupported;
     };
     
 };

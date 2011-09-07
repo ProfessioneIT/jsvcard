@@ -1,4 +1,10 @@
 <?php
+/*
+ * @package jsvCard
+ * @author Marco Cosentino
+ * @copyright (C) 2011 www.professioneit.com
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+*/
 
 /*
  * This php stub receives a file and stores it in session. Afterward the file can be read 
