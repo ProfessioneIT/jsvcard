@@ -250,7 +250,7 @@ var vCard = function(){
 		
 		// Convert all chars to numbers
 		for(var i=0; i < binary_value.length; i++){
-			binary_value[i] = binary_value[i].charCodeAt(0)
+			binary_value[i] = binary_value[i].charCodeAt(0);
 		}
 	
 		return Iconv.decode(binary_value,charset);
@@ -398,8 +398,8 @@ var vCard = function(){
 			geo: this.decodeText,
 			title: this.decodeText,
 			role: this.decodeText,
-			logo: this.decodeText,
-			agent: this.decodeText,
+			logo: this.decodeNotSupported,
+			agent: this.decodeNotSupported,
 			org: this.decodeText,
 			note: this.decodeText,
 			rev: this.decodeText,

@@ -148,13 +148,15 @@ var jsvCard = function(){
         * @method handleLoad
         */
         this.handleLoad = function(evt){
-                var files = document.getElementById(evt.data.file).files;
+                        var file_element = document.getElementById(evt.data.file);
+                var files = file_element.files;
                 
                 if(evt.data.html5 && files !== undefined && files[0] !== undefined){
                     self.loadFromFile(files[0],evt.data.form);
                 } else {
                     self.loadFromFileNoHTML5(evt.data.file,evt.data.form);
                 }
+                file_element.value = "";
                 $('#'+evt.data.div_to_hide).hide();
                 return true;
         };
@@ -310,35 +312,55 @@ var jsvCard = function(){
     };
     
     
-	/**
-	 * This hash contains classes associations. The key is the classname
-	 * the value is the path within the vcard object structure.<br/>
-	 * This hash will be used to fill the target form. If you want to support
-	 * other classes you have to add items to this hash [TODO: write how to]
-	 * @property CLASSES
-	 * @type Object
-	 */
-	this.CLASSES = {
-    		vVersion:"version",
-    		vTitle:"title",
-    		vFirstName:"n.first",
-    		vMidNames:"n.middle",
-    		vLastName:"n.last",
-    		vNamePrefix:"n.prefix",
-    		vNamePostfix:"n.postfix",
-    		vFName:"fn",
-    		vAddressHomePO:"adr.home.po",
-    		vAddressHomeExt:"adr.home.extension",
-    		vAddressHomeStreet:"adr.home.street",
-    		vAddressHomeLocation:"adr.home.location",
-    		vAddressHomeRegion:"adr.home.region",
-    		vAddressHomePostalCode:"adr.home.postalcode",
-    		vAddressHomeCountry:"adr.home.country",
-    		vAddressHomeLabel:"label.home",
-    		vTelHomeVoice:"tel.home.voice",
-    		vTelHomeFax:"tel.home.fax",
-    		vTelWorkVoice:"tel.work.voice",
-    		vTelWorkFax:"tel.work.fax"    		
+        /**
+         * This hash contains classes associations. The key is the classname
+         * the value is the path within the vcard object structure.<br/>
+         * This hash will be used to fill the target form. If you want to support
+         * other classes you have to add items to this hash in this way:<br/>
+         * jsvcard.CLASSES["myNewFirstNameClass"] = "n.first";
+         * @property CLASSES
+         * @type Object
+         */
+        this.CLASSES = {
+                vVersion:"version",
+                vTitle:"title",
+                vOrganization:"org",
+                vFirstName:"n.first",
+                vMidNames:"n.middle",
+                vLastName:"n.last",
+                vNamePrefix:"n.prefix",
+                vNamePostfix:"n.postfix",
+                vFName:"fn",
+                vAddressHomePO:"adr.home.po",
+                vAddressHomeExt:"adr.home.extension",
+                vAddressHomeStreet:"adr.home.street",
+                vAddressHomeLocation:"adr.home.location",
+                vAddressHomeRegion:"adr.home.region",
+                vAddressHomePostalCode:"adr.home.postalcode",
+                vAddressHomeCountry:"adr.home.country",
+                vAddressHomeLabel:"label.home",
+                vAddressWorkPO:"adr.work.po",
+                vAddressWorkExt:"adr.work.extension",
+                vAddressWorkStreet:"adr.work.street",
+                vAddressWorkLocation:"adr.work.location",
+                vAddressWorkRegion:"adr.work.region",
+                vAddressWorkPostalCode:"adr.work.postalcode",
+                vAddressWorkCountry:"adr.work.country",
+                vAddressWorkLabel:"label.work",
+                vTelHomeVoice:"tel.home.voice",
+                vTelHomeFax:"tel.home.fax",
+                vTelCellVoice:"tel.cell.voice",
+                vTelWorkVoice:"tel.work.voice",
+                vTelWorkFax:"tel.work.fax",
+                vEmail:"email.internet",
+                vTimezone:"tz",
+                vGeolocation:"geo",
+                vRole:"role",
+                vRevision:"rev",
+                vNote:"note",
+                vURL:"url",
+                vUID:"uid",
+                vNickname:"nickname"
     };
 
     /**
@@ -349,40 +371,40 @@ var jsvCard = function(){
     * formid - a String with the ID of the form to fill with data
     * vcard - an Object that holds the data
     */
-	this.fillForm = function(formid,vcard)
+        this.fillForm = function(formid,vcard)
     {
-		// Cycle through classes
-		for (var klass in self.CLASSES){
-			if (self.CLASSES.hasOwnProperty(klass)) {
-			
-				var splitted = self.CLASSES[klass].split(".");
-				var i = 0;
-				var current_obj = vcard;
-				
-				// Check if the specified path is defined inside the vcard object
-				while(i < splitted.length && current_obj !== undefined && current_obj.hasOwnProperty(splitted[i])){
-					current_obj = current_obj[splitted[i]];
-					i++;
-				}
-				
-				// If the whole path inside the vcard object is defined then we
-				// will have the final value inside current_obj
-				if(i == splitted.length){
-					var element = $('form#'+formid+' .'+klass);
-					if(element[0] !== undefined){
-						switch(element[0].nodeName.toLowerCase())
-						{
-						case 'input':
-							$(element).val(current_obj);
-							break;
-						case 'textarea':
-							$(element).html(current_obj);
-							break;
-						}
-					}
-				}
-			}
-		}
+                // Cycle through classes
+                for (var klass in self.CLASSES){
+                        if (self.CLASSES.hasOwnProperty(klass)) {
+                        
+                                var splitted = self.CLASSES[klass].split(".");
+                                var i = 0;
+                                var current_obj = vcard;
+                                
+                                // Check if the specified path is defined inside the vcard object
+                                while(i < splitted.length && current_obj !== undefined && current_obj.hasOwnProperty(splitted[i])){
+                                        current_obj = current_obj[splitted[i]];
+                                        i++;
+                                }
+                                
+                                // If the whole path inside the vcard object is defined then we
+                                // will have the final value inside current_obj
+                                if(i == splitted.length){
+                                        var element = $('form#'+formid+' .'+klass);
+                                        if(element[0] !== undefined){
+                                                switch(element[0].nodeName.toLowerCase())
+                                                {
+                                                case 'input':
+                                                        $(element).val(current_obj);
+                                                        break;
+                                                case 'textarea':
+                                                        $(element).html(current_obj);
+                                                        break;
+                                                }
+                                        }
+                                }
+                        }
+                }
     };
         
     this.resetForm = function(formid){
@@ -390,11 +412,11 @@ var jsvCard = function(){
             $('form#'+formid+' textarea').html('');
     };
                     
-	/**
-	* Determines if a given element supports the given event
-	* function from http://yura.thinkweb2.com/isEventSupported/
-	* @method isEventSupported
-	*/
+        /**
+        * Determines if a given element supports the given event
+        * function from http://yura.thinkweb2.com/isEventSupported/
+        * @method isEventSupported
+        */
     this.isEventSupported = function ( eventName, element ) {
 
         var TAGNAMES = {
@@ -403,29 +425,29 @@ var jsvCard = function(){
                     'error': 'img', 'load': 'img', 'abort': 'img'
                 };
 
-	    element = element || document.createElement(TAGNAMES[eventName] || 'div');
-	    eventName = 'on' + eventName;
-	
-	    // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
-	    var isSupported = eventName in element;
-	
-	    if ( !isSupported ) {
-	        // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
-	        if ( !element.setAttribute ) {
-	            element = document.createElement('div');
-	        }
-	        if ( element.setAttribute && element.removeAttribute ) {
-	            element.setAttribute(eventName, '');
-	            isSupported = is(element[eventName], 'function');
-	
-	            // If property was created, "remove it" (by setting value to `undefined`)
-	            if ( !is(element[eventName], 'undefined') ) { element[eventName] = undefined; }
-	            element.removeAttribute(eventName);
-	        }
-	    }
-	
-	    element = null;
-	    return isSupported;
+            element = element || document.createElement(TAGNAMES[eventName] || 'div');
+            eventName = 'on' + eventName;
+        
+            // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize", whereas `in` "catches" those
+            var isSupported = eventName in element;
+        
+            if ( !isSupported ) {
+                // If it has no `setAttribute` (i.e. doesn't implement Node interface), try generic element
+                if ( !element.setAttribute ) {
+                    element = document.createElement('div');
+                }
+                if ( element.setAttribute && element.removeAttribute ) {
+                    element.setAttribute(eventName, '');
+                    isSupported = is(element[eventName], 'function');
+        
+                    // If property was created, "remove it" (by setting value to `undefined`)
+                    if ( !is(element[eventName], 'undefined') ) { element[eventName] = undefined; }
+                    element.removeAttribute(eventName);
+                }
+            }
+        
+            element = null;
+            return isSupported;
     };
     
 };

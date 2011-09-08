@@ -1,5 +1,7 @@
 BEGIN:VCARD
 VERSION:2.1
+ORG:TEST
+TITLE:C.E.O.
 N:Rossi;Mario;Gianni;sig
 FN:Egr. Sig. Mario Gianni Rossi
 NICKNAME:Marietto
@@ -8,7 +10,9 @@ TEL;CELL;VOICE:123456789
 TEL;HOME;FAX:987654321
 ADR;HOME:;;Via G.Garibaldi, 23;Roma;Roma;00100;Italia
 LABEL;HOME;ENCODING=QUOTED-PRINTABLE:Via G.Garibaldi, 23=0D=0ARoma, Roma 00100=0D=0AItalia
-URL;HOME:http://www.rossi.it
+ADR;WORK:;;Via Pinco Pallino, 23;Catania;Catania;95100;Italia
+LABEL;WORK;ENCODING=QUOTED-PRINTABLE:Via Pinco Pallino, 23=0D=0ACatania, Catania 95100=0D=0AItalia
+URL:http://www.rossi.it/my_updated_vcard.vcf
 EMAIL;PREF;INTERNET:mario@rossi.it
 REV:20080817T172534Z
 END:VCARD

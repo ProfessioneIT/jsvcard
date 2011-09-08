@@ -43,7 +43,7 @@ end
 desc "Builds the project docs."
 task :yuidoc => ["#{BUILDDIR}/temp","#{BUILDDIR}/doc"] do
   sh "python lib/yuidoc/bin/yuidoc.py src -p #{BUILDDIR}/temp -o #{BUILDDIR}/doc -t lib/yuidoc/template -v #{PVERSION} --project #{PROJECTNAME} --projecturl #{PROJECTURL}"
-  sh "cp README #{BUILDDIR}/"
+  cp "README.rdoc", "#{BUILDDIR}/"
 end
 
 desc "Concatenate and compress all javascripts."
@@ -64,6 +64,7 @@ task :manip_tests => ["#{BUILDDIR}/test","#{BUILDDIR}/lib"] do
   
   # Modify the test & Spec pages
   manip_test_assets("src/test.html","#{BUILDDIR}/test/test.html")
+  manip_test_assets("src/test-it.html","#{BUILDDIR}/test/test-it.html")
   manip_test_assets("test/SpecRunner.html","#{BUILDDIR}/test/SpecRunner.html")
   
   # Copy the specs files

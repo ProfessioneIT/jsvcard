@@ -1,63 +1,51 @@
 = jsvCard - JavaScript vCard reader and parser
 
-The main goal of this library is to make the tedious 
-personal data forms filling easier using your own vCard.
+Project page: http://strategievirali.com/en/software/jsvcard.html
 
-To do this a parsing library has been developed from scratch
-and, taking advantage of HTML5 (jQuery + php when not available),
-it is possible to read the vCard directly from filesystem.
+The main goal of this library is to make the boring personal data forms filling easier using your own vCard.
+
+To accomplish this a parsing library has been developed from scratch and, taking advantage of HTML5 (jQuery + php when not available), it is possible to read the vCard directly from filesystem.
 
 == Requirements
 
-jsvCard works within HTML5 browsers (TODO:list of tested browsers)
-and has fallback for older browsers using a php stub 
-(TODO:state the version of PHP needeD)
+jsvCard works within HTML5 browsers (actually tested on Google chrome and Firefox) and has fallback for older browsers using a php stub 
+(TODO:state the version of PHP needed)
 
 == Usage
 
-If you checked out from repository you should run through the
-building cycle. See BUILDING for the details.
+If you checked out from repository you should run through the building cycle. See BUILDING for the details.
 
-For a running implementation use test.html. If your browser
-does not support HTML5 File API you should configure your
-environment to use freadstub.php.
+For a running implementation use test.html. If your browser does not support HTML5 File API you should configure your environment to use freadstub.php.
 
 Configuration procedure:
 
-1. Place the content of the "out" folder in a reachable place
-2. Place "freadstub.php" in a reachable and phpable place
-2. Link the jquery, ajaxuploader and jsvcard (in this order) in
-your target webpage
-3. Put a clickable element (an image, a button, ...) with a
-specified id (say "vClickMe")
-4. Create your form and put a specified id (say "vTargetForm")
-5. Insert the right classes to the form elements to have them 
-populated with the vcard content (see below)
-5. Put the init script right before the </body>:
+1. Place the content of the "lib" folder in a reachable place
+2. Place "freadstub.php" in a reachable and PHPable place
+3. Link the jquery, ajaxuploader and jsvcard (in this order) in your target webpage
+4. Put a clickable element (an image, a button, ...) with a specified id (say "vClickMe")
+5. Create your form and put a specified id (say "vTargetForm")
+6. Insert the correct classes to the form elements to have them populated with the vcard content (see below)
+7. Put the init script right before the </body>:
 
 <script type="text/javascript">
 //<![CDATA[
 	jsvcard = new jsvCard();
+	// INSERT HERE variables overriding
 	jsvcard.install("vTargetForm","vClickMe","bottom-left");
 //]]>
 </script>
 
-Note: You can install jsvcard on any pair of "clickable",
-"target form" in the same page. DON'T reuse clickables or forms. 
+Note: You can install jsvcard on any pair of "clickable", "target form" in the same page. DON'T reuse clickables or forms. 
 
-Note: You can skip linking ajaxuploader and installing 
-freadstub.php if you don't want support for HTML4. You can 
-specify the path for freadstub.php writing this line before the 
-"install" call:
+Note: You can skip linking ajaxuploader and installing freadstub.php if you don't want support for HTML4. You can specify the path for freadstub.php writing this line before the "install" call:
 
 	jsvcard.freadstub = "http://www.my-domain.net/freadstub.php";
 
-Note: jsvcard* identifiers and classes are RESERVED, so use other names.
+Note: "jsvcard*" identifiers and classes are RESERVED, so use other names.
 
 == Supported positions
 
-The position tells how to place the popup respect to the "vClickMe" 
-element.
+The position tells the popup position respect to the "vClickMe" element.
 
 Positions:
 * top
@@ -77,9 +65,31 @@ TODO: write the supported classes based on fillForm()
 
 Messages are put in some variables inside the jsvCard object. 
 You can change the messages changing the content of these variables.
-Variables names.
+
+Variables names:
 * chooseText
 * dropText
+* dropHereText
+* wrongInputText
+* wrongDropText
+* errorReadingText
+* resetText
 
-Pleas look at the source code for a precise reference about these 
-variables, their content ahd thir meaning.
+Pleas look at the source code for a precise reference about these variables, their content ahd thir meaning.
+
+== vCard references
+
+For the definition of the vCard format syntax and (most important) semantics look at these references:
+
+http://en.wikipedia.org/wiki/VCard
+http://www.imc.org/pdi/
+
+=== 2.1
+http://www.imc.org/pdi/pdiproddev.html
+
+=== 3.0
+http://tools.ietf.org/html/rfc2425
+http://tools.ietf.org/html/rfc2426
+
+=== 4.0
+http://tools.ietf.org/html/rfc6350

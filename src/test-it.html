@@ -26,34 +26,34 @@
 <form id="vTargetForm">
 <table>
 	<tr>
-		<td>vCard Version:</td>	
+		<td>Versione vCard:</td>	
 		<td><input id="vcver" class="vVersion" type="text" size="4" /></td>
 		<td></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>Name prefix:</td> 
+		<td>Prefisso nome:</td> 
 		<td><input class="vNamePrefix" type="text" size="16" />
-		<td>Name postfix:</td> 
+		<td>Suffisso nome:</td> 
 		<td><input class="vNamePostfix" type="text" size="16" />
 	</tr>
 	<tr>
-		<td>First name:</td> 
+		<td>Nome:</td> 
 		<td><input id="firstname"  class="vFirstName" type="text" size="16" />
-		<td>Middle names:</td> 
+		<td>Altri nomi:</td> 
 		<td><input id="midnames"  class="vMidNames" type="text" size="16" />
 	</tr>
 	<tr>
-		<td>Last name:</td> 
+		<td>Cognome:</td> 
 		<td><input class="vLastName" type="text" size="16" />
-		<td>Formatted name: </td>
+		<td>Nome formattato: </td>
 		<td><input class="vFName" type="text"  size="16" /></td>
 	</tr>
 	
 	<tr>
-		<td>Title:</td>
+		<td>Titolo:</td>
 		<td><input id="title"  class="vTitle" type="text" size="16" /></td>
-		<td>Organization:</td>
+		<td>Organizzazione:</td>
 		<td><input id="title"  class="vOrganization" type="text" size="16" /></td>
 	</tr>
 	
@@ -66,58 +66,58 @@
 
 
 	<tr>
-		<td>Home Address Post Office: </td>
+		<td>Ufficio postale indirizzo di casa: </td>
 		<td><input class="vAddressHomePO" type="text"  size="16" /></td>
-		<td>Work Address Post Office: </td>
+		<td>Ufficio postale indirizzo lavoro: </td>
 		<td><input class="vAddressWorkPO" type="text"  size="16" /></td>		
 	</tr>
 
 	<tr>
-		<td>Home Address Extended: </td>
+		<td>Estensione indirizzo di casa: </td>
 		<td><input class="vAddressHomeExt" type="text" size="16" /></td>
-		<td>Work Address Extended: </td>
+		<td>Estensione indirizzo lavoro: </td>
 		<td><input class="vAddressWorkExt" type="text" size="16" /></td>
 	</tr>
 
 	<tr>
-		<td>Home Address Location: </td>
+		<td>Città indirizzo di casa: </td>
 		<td><input class="vAddressHomeLocation" type="text" size="16" /></td>
-		<td>Work Address Location: </td>
+		<td>Città indirizzo lavoro: </td>
 		<td><input class="vAddressWorkLocation" type="text" size="16" /></td>
 	</tr>
 
 	<tr>
-		<td>Home Address Street: </td>
+		<td>Indirizzo di casa: </td>
 		<td><input class="vAddressHomeStreet" type="text" size="16" /></td>
-		<td>Work Address Street: </td>
+		<td>Indirizzo lavoro: </td>
 		<td><input class="vAddressWorkStreet" type="text" size="16" /></td>
 	</tr>
 
 	<tr>
-		<td>Home Address Region: </td>
+		<td>Provincia indirizzo di casa: </td>
 		<td><input class="vAddressHomeRegion" type="text" size="16" /></td>
-		<td>Work Address Region: </td>
+		<td>Provincia indirizzo lavoro: </td>
 		<td><input class="vAddressWorkRegion" type="text" size="16" /></td>
 	</tr>
 	
 	<tr>
-		<td>Home Address Postal Code: </td>
+		<td>Codice postale indirizzo di casa: </td>
 		<td><input class="vAddressHomePostalCode" type="text" size="16" /></td>
-		<td>Work Address Postal Code: </td>
+		<td>Codice postale indirizzo lavoro: </td>
 		<td><input class="vAddressWorkPostalCode" type="text" size="16" /></td>
 	</tr>
 	
 	<tr>
-		<td>Home Address Country: </td>
+		<td>Nazione indirizzo di casa: </td>
 		<td><input class="vAddressHomeCountry" type="text" size="16" /></td>
-		<td>Work Address Country: </td>
+		<td>Nazione indirizzo lavoro: </td>
 		<td><input class="vAddressWorkCountry" type="text" size="16" /></td>
 	</tr>
 
 	<tr>
-		<td>Home Address Label:</td>
+		<td>Etichetta indirizzo di casa:</td>
 		<td><textarea rows="5" class="vAddressHomeLabel"></textarea></td>
-		<td>Work Address Label:</td>
+		<td>Etichetta indirizzo lavoro:</td>
 		<td><textarea rows="5" class="vAddressWorkLabel"></textarea></td>
 	</tr>
 
@@ -129,19 +129,19 @@
 	</tr>
 
 	<tr>
-		<td>Home Voice Telephone:</td> 
+		<td>Telefono di casa:</td> 
 		<td><input class="vTelHomeVoice" /></td> 
-		<td>Work Voice Telephone:</td> 
+		<td>Telefono lavoro:</td> 
 		<td><input class="vTelWorkVoice" /></td> 
 	</tr>
 	<tr>
-		<td>Home Fax Telephone:</td> 
+		<td>Fax di casa:</td> 
 		<td><input class="vTelHomeFax" /></td> 
-		<td>Work Fax Telephone:</td> 
+		<td>Fax lavoro:</td> 
 		<td><input class="vTelWorkFax" /></td> 
 	</tr>
 	<tr>
-		<td>Mobile Telephone:</td> 
+		<td>Cellulare:</td> 
 		<td><input class="vTelCellVoice" /></td> 
 		<td>Email:</td> 
 		<td><input class="vEmail" /></td> 
@@ -154,6 +154,15 @@
 <script type="text/javascript">
 //<![CDATA[
 	jsvcard = new jsvCard();
+	
+	jsvcard.chooseText = "Scegliere il file contenente la vCard attraverso l'apposito selettore.";
+	jsvcard.dropText = "In alternativa è possibile usare il drag &amp; drop rilasciando il file nell'apposita area.";
+	jsvcard.dropHereText = "Riasciare qui!";
+	jsvcard.wrongInputText = "Per favore specificare un file contenente una vCard."
+	jsvcard.wrongDropText = "Per favore rilasciare solo file vCard validi.";
+	jsvcard.errorReadingText = "Si è presentato un errore durante la lettura del file.";
+	jsvcard.resetText ="Pulisci il form";
+	
 	jsvcard.install("vTargetForm","vClickMe","bottom-right");
 //]]>
 </script>
